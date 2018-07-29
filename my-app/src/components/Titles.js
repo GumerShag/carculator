@@ -3,10 +3,12 @@ import React,  {Component} from 'react';
 class Titles extends Component {
     render() {
         return (
-            <div>
-                <h1>Carculator</h1>
-                <p>The first carcsharing calculator!</p>
-            </div>
+            <ul className='nav'>
+                <li className='nav-item'>
+                    <span><h1>КАРШЕРИНГ</h1></span>
+                    <span><h4>КАЛЬКУЛЯТОР</h4></span>
+                </li>
+            </ul>
             );
     }
 }

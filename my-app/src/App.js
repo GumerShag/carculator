@@ -2,17 +2,34 @@ import React, { Component } from 'react';
 import './App.css';
 import Titles from './components/Titles'
 import Form from './components/Form'
-import Data from './components/Data'
+import Ymap from './components/Ymap'
+import moment from 'moment'
+import axios from 'axios'
 
 class App extends Component {
     state = {
         date: new Date(),
-        pickUpDate: undefined,
-        dropOffDate: undefined
+        pickUpDate: moment(),
+        dropOffDate: moment(),
+        distance: undefined,
+        insurance: false
     };
     calculatePrice = async (e) => {
         e.preventDefault();
-console.log(e.target.elements)
+        var requestData ={
+            pickUpDate: e.target.elements.pickUpDate.value,
+            dropOffDate:e.target.elements.pickUpDate.value,
+            distance:e.target.elements.distance.value,
+            insurance: e.target.elements.insurance.value
+        };
+        console.log(requestData)
+        axios.post('http://localhost:3001/', {
+            params: requestData
+        }).then(function (response) {
+
+        }).catch(function (err) {
+            console.log(err)
+        })
     };
 
     clearData = () => {
@@ -24,18 +41,15 @@ console.log(e.target.elements)
 
     render() {
         return (
-            < div>
-                <h1>Hello</h1>
-                <p>Now is {this.state.date.toLocaleDateString()}</p>
+            <div className='container'>
                 <Titles/>
-                <h3>Машина будет у меня...</h3>
-
-                <Form calculatePrice={this.calculatePrice} />
-                <Data
-                    dateTo = {this.state.pickUpDate}
-                    dateWhen = {this.state.dropOffDate}
-                />
-                <button onClick={this.clearData}>Clear</button>
+                <div className='row'>
+                    <div className='col-md-8 col-sm-1'>
+                        <Ymap/>
+                    </div>
+                        <div className='col-md-4 col-sm-1'><Form calculatePrice={this.calculatePrice} />
+                    </div>
+                </div>
             </div>
         )
     }
