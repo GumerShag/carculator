@@ -68,7 +68,7 @@ class Ymap extends Component{
     };
     render() {
         return(
-            <div>
+            <div className='border'>
                 <div id="yandex-map"></div>
             </div>
         )

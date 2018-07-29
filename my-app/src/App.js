@@ -42,14 +42,19 @@ class App extends Component {
     render() {
         return (
             <div className='container'>
-                <Titles/>
-                <div className='row'>
-                    <div className='col-md-8 col-sm-1'>
-                        <Ymap/>
+                <header><Titles/></header>
+                <main role='main'>
+                    <div className='row'>
+                        <div className='col-md-9 col-sm-1'>
+                            <Ymap/>
+                        </div>
+                        <div className='col-md-3 col-sm-1'><Form calculatePrice={this.calculatePrice}/>
+                        </div>
                     </div>
-                        <div className='col-md-4 col-sm-1'><Form calculatePrice={this.calculatePrice} />
+                </main>
+                    <div className='container footer-text'>
+                        <span className='text-muted'><h6>Версия 1.0</h6></span>
                     </div>
-                </div>
             </div>
         )
     }

@@ -50,7 +50,8 @@ class Form extends Component {
                         onClick={this.onPickUpDateInputClick}
                         type="When"
                         value={this.state.pickUpDate.format('DD/MM/YYYY HH:mm')}
-                        readOnly name="pickUpDate"
+                        readOnly="true"
+                        name="pickUpDate"
                         placeholder='дд/мм/гггг чч:мм'
                         id='pickUpDate'
                         className='form-control'/>
@@ -92,7 +93,7 @@ class Form extends Component {
                     </div>
                 </div>
                 <div className='form-group'>
-                    <label htmlFor="distance">Расстояние</label>
+                    <label htmlFor="distance">Расстояние (км):</label>
                     <input id="distance" readOnly className='form-control' onChange={this.handleDistanseChange} value={this.state.routeDistance}/>
                 </div>
                 <div className='form-check'>
