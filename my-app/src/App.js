@@ -8,21 +8,28 @@ import axios from 'axios'
 
 class App extends Component {
     state = {
-        date: new Date(),
-        pickUpDate: moment(),
-        dropOffDate: moment(),
+        pickUpDate: moment('05/05/2018 10:59'),
+        dropOffDate: moment('05/06/2018 19:52'),
         distance: undefined,
+        duration: undefined,
         insurance: false
     };
     calculatePrice = async (e) => {
         e.preventDefault();
         var requestData ={
             pickUpDate: e.target.elements.pickUpDate.value,
-            dropOffDate:e.target.elements.pickUpDate.value,
+            dropOffDate:e.target.elements.dropOffDate.value,
             distance:e.target.elements.distance.value,
-            insurance: e.target.elements.insurance.value
+            duration:e.target.elements.duration.value,
+            insurance: e.target.elements.insurance.value,
         };
+        this.setState({
+            distance:e.target.elements.distance.value,
+            duration:e.target.elements.duration.value,
+            insurance: e.target.elements.insurance.value,
+        });
         console.log(requestData)
+        this.calculateData()
         axios.post('http://localhost:3001/', {
             params: requestData
         }).then(function (response) {
@@ -31,6 +38,21 @@ class App extends Component {
             console.log(err)
         })
     };
+
+    calculateData = () => {
+          var pida = this.state.pickUpDate;
+          var doda =   this.state.dropOffDate;
+          var dist =   this.state.distance;
+          var insurance =   this.state.insurance;
+          var duration = this.state.duration;
+
+          var days = doda.diff(pida, 'days');
+          var waitTime = doda.diff(pida, 'minutes') - duration * 2 - 6 * days * 60 ;
+
+          var allPrice = duration * 2 * 11 + waitTime * 2;
+
+          debugger
+    }
 
     clearData = () => {
         this.setState({

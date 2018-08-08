@@ -49,9 +49,13 @@ class Ymap extends Component{
                     if (activeRoute) {
                         // Получим протяженность маршрута.
                         let length = route.getActiveRoute().properties.get("distance");
-                        var distanseInput = document.getElementById('distance');
+                        let duration = route.getActiveRoute().properties.get("duration");
+                        let distanseInput = document.getElementById('distance');
+                        let durationInput = document.getElementById('duration');
                         distanseInput.value = Math.round(length["value"] / 1000);
-                        distanseInput.dispatchEvent(new Event('change'))
+                        durationInput.value = Math.round(duration["value"] / 60);
+                        distanseInput.dispatchEvent(new Event('change'));
+                        durationInput.dispatchEvent(new Event('change'));
                     }
                 });
 
@@ -61,9 +65,14 @@ class Ymap extends Component{
     };
 
     handleDistanseChange = (length) => {
-        console.log(length)
         this.setState({
             routeDistance: length
+        })
+    };
+
+    handleDurationChange = (minutes) => {
+        this.setState({
+            routeDuration: minutes
         })
     };
     render() {

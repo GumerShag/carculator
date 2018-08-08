@@ -5,8 +5,8 @@ import '../../node_modules/input-moment/dist/input-moment.css';
 
 class Form extends Component {
     state = {
-        pickUpDate: moment(),
-        dropOffDate: moment(),
+        pickUpDate: moment('09/08/2018 10:00'),
+        dropOffDate: moment('10/08/2018 12:00'),
         showPickUpDatePicker: false,
         showDropOffDatePicker: false,
         insurance: false
@@ -95,6 +95,10 @@ class Form extends Component {
                 <div className='form-group'>
                     <label htmlFor="distance">Расстояние (км):</label>
                     <input id="distance" readOnly className='form-control' onChange={this.handleDistanseChange} value={this.state.routeDistance}/>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor="duration">Время в пути (мин):</label>
+                    <input id="duration" readOnly className='form-control' onChange={this.handleDurationChange} value={this.state.routeDuration}/>
                 </div>
                 <div className='form-check'>
                     <input id="insurance" type='checkbox' className='form-check-input' onChange={this.handleInsuranceChange} value={this.state.insurance}/>
