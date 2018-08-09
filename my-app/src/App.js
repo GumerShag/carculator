@@ -8,58 +8,73 @@ import axios from 'axios'
 
 class App extends Component {
     state = {
-        pickUpDate: moment('05/05/2018 10:59'),
-        dropOffDate: moment('05/06/2018 19:52'),
+        pickUpDate: moment('05/06/2018 19:44'),
+        dropOffDate: moment('05/06/2018 19:55'),
         distance: undefined,
         duration: undefined,
         insurance: false
     };
     calculatePrice = async (e) => {
         e.preventDefault();
-        var requestData ={
+        let requestData ={
             pickUpDate: e.target.elements.pickUpDate.value,
             dropOffDate:e.target.elements.dropOffDate.value,
             distance:e.target.elements.distance.value,
             duration:e.target.elements.duration.value,
-            insurance: e.target.elements.insurance.value,
+            insurance: JSON.parse(e.target.elements.insurance.value),
         };
-        this.setState({
-            distance:e.target.elements.distance.value,
-            duration:e.target.elements.duration.value,
-            insurance: e.target.elements.insurance.value,
-        });
-        console.log(requestData)
-        this.calculateData()
-        axios.post('http://localhost:3001/', {
+        axios.post('http://localhost:3001/calculate', {
             params: requestData
         }).then(function (response) {
-
+            console.log('Cтоимость:')
+            console.log(response)
         }).catch(function (err) {
             console.log(err)
         })
     };
 
-    calculateData = () => {
-          var pida = this.state.pickUpDate;
-          var doda =   this.state.dropOffDate;
-          var dist =   this.state.distance;
-          var insurance =   this.state.insurance;
-          var duration = this.state.duration;
+    calculateBelkaPrice = () => {
+        let me = this;
+        //fixme: read all car data from config file
+        let carData = [
+            {
+                name: 'rio',
+                movePrice: 8,
+                insuranceMovePrice: 2,
+                overDistancePrice: 8,
+                waitPrice: 2,
+                maxDayInsurance: 500
+            },
+            {
+                name: 'x-line',
+                movePrice: 9,
+                insuranceMovePrice: 2,
+                overDistancePrice: 9,
+                waitPrice: 2.5,
+                maxDayInsurance: 500
+            },
+            {
+                name: 'mercedes',
+                movePrice: 14,
+                insuranceMovePrice: 4,
+                overDistancePrice: 14,
+                waitPrice: 4,
+                maxDayInsurance: 1500
+            }
+        ];
 
-          var days = doda.diff(pida, 'days');
-          var waitTime = doda.diff(pida, 'minutes') - duration * 2 - 6 * days * 60 ;
+        let belkaPriceData = [];
 
-          var allPrice = duration * 2 * 11 + waitTime * 2;
-
-          debugger
-    }
-
-    clearData = () => {
-        this.setState({
-            pickUpDate: '',
-            dropOffDate: ''
-        })
+        carData.forEach(function (car) {
+            let priceForCar = me.countPrice(car.movePrice, car.insuranceMovePrice, car.waitPrice, car.maxDayInsurance, car.overDistancePrice);
+            belkaPriceData.push({
+                car: car.name,
+                price: priceForCar
+            })
+        });
     };
+
+
 
     render() {
         return (
