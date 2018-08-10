@@ -5,8 +5,8 @@ import '../../node_modules/input-moment/dist/input-moment.css';
 
 class Form extends Component {
     state = {
-        pickUpDate: moment(),
-        dropOffDate: moment(),
+        pickUpDate: moment('11/08/2018 10:00', 'DD/MM/YYYY HH:mm'),
+        dropOffDate: moment('12/08/2018 12:00', 'DD/MM/YYYY HH:mm'),
         showPickUpDatePicker: false,
         showDropOffDatePicker: false,
         insurance: false
